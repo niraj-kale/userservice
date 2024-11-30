@@ -19,7 +19,9 @@ public class UserController {
 
     @PostMapping("/signup")
     public UserResponseDto signUp(@RequestBody SignupRequestDto signupRequestDto) {
-        User user = userService.signUp(signupRequestDto.getName(), signupRequestDto.getEmail(), signupRequestDto.getPassword());
+        User user = userService.signUp(signupRequestDto.getName(),
+                signupRequestDto.getEmail(),
+                signupRequestDto.getPassword());
         return UserResponseDto.fromUser(user);
     }
 
@@ -31,6 +33,9 @@ public class UserController {
     @GetMapping("/validate/{token}")
     public UserResponseDto validateToken(@PathVariable String token) {
         User user = userService.validateToken(token);
+        if(user == null) {
+            return null;
+        }
         return UserResponseDto.fromUser(user);
     }
 }
